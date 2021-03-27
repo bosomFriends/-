@@ -23,6 +23,21 @@
         console.log(jump(2)); // 2
         console.log(jump(3)); // 3
         console.log(jump(4)); // 5
+        console.log(jump(10)); // 89
+
+        // 记忆化递归保存中间的值
+        let cache = [,1,2]
+        function jumpFloor(n) {
+            if(n<=0) { return }
+            if(cache[n]!==undefined) {
+                return cache[n]
+            }
+            return cache[n] = jumpFloor(n-1) + jumpFloor(n-2)
+        }
+        console.log(jumpFloor(0));
+        console.log(jumpFloor(1));
+        console.log(jumpFloor(2));
+        console.log(jumpFloor(10));
     </script>
 </body>
 </html>
