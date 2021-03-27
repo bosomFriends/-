@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 快速排序
+        function quiklySort(arr) {
+            if(!Array.isArray(arr)) {
+                return 
+            }
+            // 定义一个基础变量
+            let baseNum = arr[0]
+            // 以基础变量为定点小于基础变量的存放在左边,大于基础变量的放在右边
+            let left_arr = []
+            let right_arr = []
+        
+            for(let i = 1 ; i < arr.length; i++) {
+                if(arr[i]>baseNum) {
+                    right_arr.push(arr[i])
+                }else {
+                    left_arr.push(arr[i])
+                }
+            }
+            
+            // 对数组进行快速排序数组的长度至少要是2
+            if(left_arr.length>=2) {
+                // 对左边的数组进行快排
+                left_arr = quiklySort(left_arr)
+            }
+            if(right_arr.length>=2) {
+                // 对右边的数组进行快排
+                right_arr = quiklySort(right_arr)
+            }
+        
+            return left_arr.concat(baseNum,right_arr)
+        }
+        
+        let arrParam = [23,45,17,56,28,14,77,8,56,59]
+        let result = quiklySort(arrParam)
+        console.log('result==',result)
+    </script>
+</body>
+</html>
