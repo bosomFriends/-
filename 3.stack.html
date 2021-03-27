@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>两个栈来实现一个队列</title>
+</head>
+<body>
+    <script>
+        // stack1: 栈1是入队操作
+        // stack2：栈2是出队操作
+        let stack1 = []
+        let stack2 = []
+        function push(val) {
+            stack1.push(val)
+        }
+        function pop() {
+            while(stack1.length) {
+                stack2.push(stack1.pop())
+            }
+            let popValue = stack2.pop()
+            // 将栈2中的数据挪到栈1中去(还原数据)
+            while(stack2.length) {
+                stack1.push(stack2.pop())
+            }
+            return popValue
+        }
+        /**
+         * 1.入队1,2,3,4,5
+         * 2.出队1
+         * 3.入队6
+         * 4.出队2
+         * 5.出队3
+         * 6.出队4
+         * 7.出队5
+         * 
+        */
+       push(1)
+       push(2)
+       push(3)
+       push(4)
+       push(5)
+       console.log('入队1==',stack1);
+       console.log(pop())
+       push(6)
+       console.log(pop())
+       console.log(pop())
+       console.log(pop())
+       console.log(pop())
+       console.log(pop())
+       
+    </script>
+</body>
+</html>
