@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>创建一个反转链表</title>
+</head>
+<body>
+    <script>
+        // 1.创建链表的节点：在js里面可以用构造函数创建链表的节点
+        function LinkListNode(val) {
+            this.val = val
+            this.next = null
+        }
+        // 新建一个链表 1->2->3->4->5->6
+        function linkList(arr) {
+            if(!Array.isArray(arr)) { return }
+            // {val:1,next:null}
+            let linkListHead = new LinkListNode(arr[0])
+            let linkListTail = linkListHead
+            for(let i = 1;i <= arr.length-1;i++) {
+                // {val:1,next: {val:2,next:null}} 以此内推
+                linkListTail.next = new LinkListNode(arr[i])
+                linkListTail = linkListTail.next
+            }
+            return linkListHead
+        }
+        console.log('链表--',linkList([1,2,3,4,5,6]))
+
+        // 反转链表
+        function reverseLinkList(head) {
+            let arr = []
+            // {val:1,next:LinkListNode}
+            let p = head
+            while(p) {
+                arr.push(p.val)
+                p = p.next
+            }
+            p = head
+            while(p) {
+                p.val = arr.pop()
+                p = p.next
+            }
+            return head
+        }
+        console.log(reverseLinkList(linkList([1,2,3,4,5,6])));
+        
+    </script>
+</body>
+</html>
