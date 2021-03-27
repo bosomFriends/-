@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+
+        // 二叉树重建
+        // 前序序列
+        var preface = [1, 2, 4, 7, 3, 5, 6, 8]
+        // 中序序列
+        var middleorder = [4, 7, 2, 1, 5, 3, 8, 6]
+        // console.log([1, 2, 4, 7, 3, 5, 6, 8].slice(1,4))
+        // console.log([1, 2, 4, 7, 3, 5, 6, 8].slice(4))
+        // console.log([4, 7, 2, 1, 5, 3, 8, 6].slice(0,3))
+        // console.log([4, 7, 2, 1, 5, 3, 8, 6].slice(4))
+        // 在js中创建树的节点可以用构造函数
+        function createTreeNode(val) {
+            this.val = val
+            // 左子树
+            this.left = null
+            // 右子树
+            this.right = null
+        }
+        // 封装一个构建二叉树的函数
+        function rebuildBinaryTree(preface, middleorder) {
+            if (preface[0]) {
+                //1、找到根节点(前序序列的第一个元素一定是根节点)
+                let rootNode = preface[0]
+                //2、根据找到的根节点和中序序列,找到树的左子树和右子树
+                // 根节点的索引
+                let rootIndex = middleorder.indexOf(rootNode)
+                console.log(rootIndex)
+                // 前序序列: 左子树(1,index)和右子树(index+1,最后)
+                // 中序序列: 左子树(0,index-1)和右子树 (index+1,最后)
+                //3、做左子树和右子树进行1,2步的递归操作 
+                let leftTree = rebuildBinaryTree(preface.slice(1,rootIndex+1),middleorder.slice(0,rootIndex))
+                let rightTree = rebuildBinaryTree(preface.slice(rootIndex+1),middleorder.slice(rootIndex+1))
+                // new一个构建函数的式列
+                let treeNode = new createTreeNode(rootNode)
+                treeNode.left = leftTree
+                treeNode.right = rightTree
+                return treeNode
+            }
+        }
+        
+        var res = rebuildBinaryTree(preface,middleorder)
+        console.log('res==',res)
+    </script>
+</body>
+</html>
