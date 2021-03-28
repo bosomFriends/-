@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>二叉树的先序构建二叉树</title>
+</head>
+<body>
+    <script>
+        // 层次的结构是: ['a','b','d','#','f','#','#','#','c','#','e','#','#']
+        /**
+         *        a
+         *     b      c
+         *   d   #  #    e                
+         * #    f     #     #
+         *   #     #
+        */  
+        function createTreeNode(val) {
+            this.val = val
+            this.left = null
+            this.right = null
+        }
+        function rebuildPreorderBinaryTree(preorderArr) {
+            if(!Array.isArray(preorderArr)) { return }
+            // 定义根节点
+            let root = null
+            if(preorderArr[0]!==undefined) {
+                // 先拿到根节点的值
+                let nodeVal = preorderArr.shift()
+                if(nodeVal!=='#') {
+                    // 创建根节点
+                    root = new createTreeNode(nodeVal)
+                    // 左子树
+                    root.left = rebuildPreorderBinaryTree(preorderArr)
+                    // 右子树 
+                    root.right = rebuildPreorderBinaryTree(preorderArr)
+                }
+            }
+            return root
+        }
+        console.log(rebuildPreorderBinaryTree(['a','b','d','#','f','#','#','#','c','#','e','#','#']));
+        
+    </script>
+</body>
+</html>
