@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        // 层次的结构是: ['a','b','d','#','f','#','#','#','c','#','e','#','#']
+        /**
+         *        a
+         *     b      c
+         *   d   #  #    e                
+         * #    f     #     #
+         *   #     #
+        */
+       function createNode(val) {
+           this.val = val
+           this.left = null
+           this.right = null
+       }
+       function createBinaryTree(treeArr) {
+            let root = null
+            if(treeArr[0]!==undefined) {
+                // 先拿到根节点的值
+                let nodeVal = treeArr.shift()
+                if(nodeVal!=='#') {
+                    // 创建根节点
+                    root = new createNode(nodeVal)
+                    // 左子树
+                    root.left = createBinaryTree(treeArr)
+                    // 右子树 
+                    root.right = createBinaryTree(treeArr)
+                }
+            }
+            return root
+       }
+       function createLevel_order(tree,saveTreeArr) {
+            let queue = []
+            if(tree) {
+                saveTreeArr.push(tree.val)
+                queue.push(tree)
+            }
+            while(queue.length) {
+                // 将根节点存到数组中
+                let head = queue.shift()
+                let left = head.left
+                if(left) {
+                    // console.log(left.val)
+                    saveTreeArr.push(left.val)
+                    queue.push(left)
+                }else {
+                    // console.log('#')
+                    saveTreeArr.push('#')
+                }
+                let right = head.right
+                if(right) {
+                    // console.log(right.val)
+                    saveTreeArr.push(right.val)
+                    queue.push(right)
+                }else {
+                    // console.log('#')
+                    saveTreeArr.push('#')
+                }
+            }
+            return saveTreeArr
+       }
+       let arr = ['a','b','d','#','f','#','#','#','c','#','e','#','#']
+       let tree = createBinaryTree(arr)
+       console.log('tree==',tree);
+       let saveTreeArr = []
+       let result = createLevel_order(tree,saveTreeArr) 
+       console.log('result==',result);
+            
+    </script>
+</body>
+</html>
