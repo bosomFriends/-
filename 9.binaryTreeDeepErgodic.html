@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>二叉树的深度遍历构建二叉树</title>
+</head>
+<body>
+    <script>
+    /** 
+     * 1.先序遍历 (根左右)
+     * ['a','b','d','#','f','#','#','#','c','#','e','#','#']
+     * 2.中序遍历 (左根右)
+     * ['#','d','#','f','#','b','#','a','#','c','#','e','#']
+     * 3.后续遍历 (左右根)
+     * ['#','#','#','f','d','#','b','#','#','#','e','c','a']
+    */
+    function createNode(val) {
+        this.val = val
+        this.left = null
+        this.right = null
+    }
+    // 遍历二叉树就是找根节点
+    function createBinaryTreePreorder(preorderArr) {
+        let root = null
+        if(preorderArr[0]!==undefined) {
+            let nodeVal = preorderArr.shift()
+            if(nodeVal!=='#') {
+                root = new createNode(nodeVal)
+                root.left = createBinaryTreePreorder(preorderArr)
+                root.right = createBinaryTreePreorder(preorderArr)
+            }
+        }
+        return root 
+    }
+    
+    // 获取先序的二叉树的数组结构
+    function preorderArr(tree,savePreorderArr) {
+        if(tree) {
+            console.log(tree.val)
+            savePreorderArr.push(tree.val)
+            // 递归遍历访问左子树
+            preorderArr(tree.left,savePreorderArr)
+            // 递归遍历访问右子树
+            preorderArr(tree.right,savePreorderArr)
+        }else {
+            console.log('#')
+            savePreorderArr.push('#')
+        }
+        return savePreorderArr
+    }
+    let preOrderArrList = ['a','b','d','#','f','#','#','#','c','#','e','#','#']
+    let savePreorderArr = []
+    let tree = createBinaryTreePreorder(preOrderArrList)
+    console.log('tree',tree)
+    let result = preorderArr(tree,savePreorderArr)
+    console.log('result==先序',result);
+    
+    // 中序遍历二叉树的数组结构
+    function middleOrderArr(tree,saveMiddleOrderArr) {
+        if(tree) {
+            // 先遍历左子树
+            middleOrderArr(tree.left,saveMiddleOrderArr)
+            // 在找根节点
+            console.log('middle===',tree.val);
+            saveMiddleOrderArr.push(tree.val)
+            // 在遍历右子树
+            middleOrderArr(tree.right,saveMiddleOrderArr)
+        }else {
+            console.log('#')
+            saveMiddleOrderArr.push('#')
+        }
+        return saveMiddleOrderArr
+    }
+    let saveMiddleOrderArr = []
+    let result1 = middleOrderArr(tree,saveMiddleOrderArr)
+    console.log('result1==中序',result1);
+    
+
+    // 后续遍历二叉树的数组结构
+    function postOrderArr(tree,savePostArr) {
+        if(tree) {
+            postOrderArr(tree.left,savePostArr)
+            postOrderArr(tree.right,savePostArr)
+            console.log('post===',tree.val)
+            savePostArr.push(tree.val)
+        }else {
+            console.log('#')
+            savePostArr.push('#')
+        }
+        return savePostArr
+    }
+    let savePostArr = []
+    let result3 = postOrderArr(tree,savePostArr)
+    console.log('result3==',result3);
+    </script> 
+</body>
+</html>
